@@ -13,7 +13,7 @@ function App() {
 
     setPhoto(imageSrc)
     console.log(imageSrc);
-    await fetch('http://localhost:5000', {
+    await fetch('https://click-server-yur0.onrender.com/', {
 
     method: 'POST',
 
