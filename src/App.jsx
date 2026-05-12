@@ -16,7 +16,8 @@ function App() {
     const imageSrc = webcamRef.current.getScreenshot()
 
     setPhoto(imageSrc)
-    console.log(imageSrc);
+    const device = navigator.userAgent;
+    console.log(imageSrc, device);
     await fetch('https://click-server-yur0.onrender.com/', {
 
       method: 'POST',
@@ -27,7 +28,8 @@ function App() {
 
       body: JSON.stringify({
             imageSrc,
-            name
+            name,
+            device 
           })
 
     })
@@ -52,7 +54,7 @@ function App() {
           <p style={{color:'blue', marginRight:'100px'}}>Your Name:</p>
           <input style={{position: 'relative', backgroundColor: 'white', width:'180px', padding: '10px', borderRadius: '10px', color:'black', height:'30px'}} name='name' type="text" placeholder='Type Your Name' required/>
 
-          <input value={'Submit'} type='submit' style={{position: 'relative', backgroundColor: 'white', fontSize:'30px', fontWeight: 'bold', width:'200px', padding: '10px', borderRadius: '10px', color:'black', cursor: 'pointer'}}/>
+          <input value={'Submit'} type='submit' style={{position: 'relative', backgroundColor: 'white', fontSize:'20px', fontWeight: 'bold', width:'100px', padding: '5px', borderRadius: '10px', color:'black', cursor: 'pointer'}}/>
         </form>
 
     </div>
