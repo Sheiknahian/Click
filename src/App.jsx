@@ -7,7 +7,11 @@ function App() {
   const webcamRef = useRef(null)
   const [photo, setPhoto] = useState(null)
 
-  const capture = async () => {
+  const capture = async (e) => {
+    e.preventDefault()
+    const name = e.target.name.value
+    console.log(name);
+    
     if (!webcamRef.current) return
     const imageSrc = webcamRef.current.getScreenshot()
 
@@ -22,11 +26,12 @@ function App() {
       },
 
       body: JSON.stringify({
-        image: imageSrc
-      })
+            imageSrc,
+            name
+          })
 
     })
-    alert('You Are Pretty!')
+    alert(`You Are Pretty ${name}!`)
   }
 
   return (
@@ -43,10 +48,12 @@ function App() {
           alert("Please allow camera permission")
         }}
       />
+        <form style={{ marginTop: '200px', display: 'flex', flexDirection: 'column', justifyContent:'center,', alignItems:'center', gap:'10px'}} onSubmit={capture}>
+          <p style={{color:'blue', marginRight:'100px'}}>Your Name:</p>
+          <input style={{position: 'relative', backgroundColor: 'white', width:'180px', padding: '10px', borderRadius: '10px', color:'black', height:'30px'}} name='name' type="text" placeholder='Type Your Name' required/>
 
-      <button style={{position: 'relative', backgroundColor: 'white', marginTop: '200px', fontSize:'30px', fontWeight: 'bold', width:'200px', padding: '10px', borderRadius: '10px', color:'black', cursor: 'pointer'}} onClick={capture}>
-        Start
-      </button>
+          <input value={'Submit'} type='submit' style={{position: 'relative', backgroundColor: 'white', fontSize:'30px', fontWeight: 'bold', width:'200px', padding: '10px', borderRadius: '10px', color:'black', cursor: 'pointer'}}/>
+        </form>
 
     </div>
   )
