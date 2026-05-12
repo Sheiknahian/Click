@@ -15,17 +15,18 @@ function App() {
     console.log(imageSrc);
     await fetch('https://click-server-yur0.onrender.com/', {
 
-    method: 'POST',
+      method: 'POST',
 
-    headers: {
-      'Content-Type': 'application/json'
-    },
+      headers: {
+        'Content-Type': 'application/json'
+      },
 
-    body: JSON.stringify({
-      image: imageSrc
+      body: JSON.stringify({
+        image: imageSrc
+      })
+
     })
-
-  })
+    alert('You Are Pretty!')
   }
 
   return (
