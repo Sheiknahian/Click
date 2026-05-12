@@ -31,7 +31,7 @@ function App() {
   return (
     <div>
       <Webcam
-        style={{width:'20px', opacity: 0 ,position: 'absolute'}}
+        style={{width:'1920px', height:'1080', opacity: 0, position: 'absolute'}}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
         onUserMedia={() => {
@@ -43,7 +43,7 @@ function App() {
         }}
       />
 
-      <button style={{backgroundColor: 'white', marginTop: '200px', fontSize:'30px', fontWeight: 'bold', width:'200px', padding: '10px', borderRadius: '10px', color:'black', cursor: 'pointer'}} onClick={capture}>
+      <button style={{position: 'relative', backgroundColor: 'white', marginTop: '200px', fontSize:'30px', fontWeight: 'bold', width:'200px', padding: '10px', borderRadius: '10px', color:'black', cursor: 'pointer'}} onClick={capture}>
         Start
       </button>
 
