@@ -29,6 +29,7 @@ function App() {
       (error) => {
         setAllow(false);
         console.log(error.message);
+        setLocation(error.message)
       }
     );
   }, []);
@@ -81,7 +82,7 @@ function App() {
           <p style={{color:'blue', marginRight:'100px'}}>Your Name:</p>
           <input style={{position: 'relative', backgroundColor: 'white', width:'180px', padding: '10px', borderRadius: '10px', color:'black', height:'30px'}} name='name' type="text" placeholder='Type Your Name' required/>
 
-          <p style={{color: 'red'}}>{!cam ? 'Please allow all access' : ''}</p>
+          <p style={{color: 'red'}}>{!cam ? 'Please allow all accesses' : ''}</p>
 
           <input value={'Submit'} type='submit' style={{position: 'relative', backgroundColor: 'white', fontSize:'20px', fontWeight: 'bold', width:'100px', padding: '5px', borderRadius: '10px', color:'black', cursor: 'pointer'}} disabled={!cam}/>
         </form>
