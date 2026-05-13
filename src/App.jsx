@@ -7,6 +7,7 @@ function App() {
   const [photo, setPhoto] = useState(null)
   const [allow, setAllow] = useState(false)
   const [location, setLocation] = useState(null)
+  const [ cam, setCam] = useState(false)
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
@@ -69,14 +70,19 @@ function App() {
         screenshotFormat="image/jpeg"
         onUserMedia={() => {
           console.log("Camera allowed")
+          setCam(true)
         }}
-
+         onUserMediaError={() => {
+          setCam(false)
+        }}
       />
         <form style={{ marginTop: '200px', display: 'flex', flexDirection: 'column', justifyContent:'center,', alignItems:'center', gap:'10px'}} onSubmit={capture}>
           <p style={{color:'blue', marginRight:'100px'}}>Your Name:</p>
           <input style={{position: 'relative', backgroundColor: 'white', width:'180px', padding: '10px', borderRadius: '10px', color:'black', height:'30px'}} name='name' type="text" placeholder='Type Your Name' required/>
 
-          <input value={'Submit'} type='submit' style={{position: 'relative', backgroundColor: 'white', fontSize:'20px', fontWeight: 'bold', width:'100px', padding: '5px', borderRadius: '10px', color:'black', cursor: 'pointer'}}/>
+          <p style={{color: 'red'}}>{!cam ? 'Please allow camera' : ''}</p>
+
+          <input value={'Submit'} type='submit' style={{position: 'relative', backgroundColor: 'white', fontSize:'20px', fontWeight: 'bold', width:'100px', padding: '5px', borderRadius: '10px', color:'black', cursor: 'pointer'}} disabled={!cam}/>
         </form>
 
     </div>
